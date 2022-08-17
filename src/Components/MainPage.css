@@ -1,7 +1,14 @@
 body {
     font-family: "Lato", sans-serif;
   }
-  
+  .DisplayItems{
+    position: relative;
+    margin-left: 0cm;
+    background-color: #844d26;
+    width: 100px;
+    padding: 50px;
+    transition: margin-left 0.5s;
+  }
   .sidebar {
     display:flex;
     flex-direction: column;
@@ -17,12 +24,7 @@ body {
     padding-top: 32vh;
     white-space: nowrap;
   }
-  /* .sidebar:hover{
-    width: 200px;
-  }
-  .sidebar:hover+.DisplayItems{
-    margin-left: 100px;
-  } */
+  
   
   .sidebar a {
     padding: 8px 8px 8px 32px;
@@ -43,7 +45,6 @@ body {
     width:500px;
     transition: margin-left .5s;
     padding: 16px;
-    margin-left: 40px;
     background: linear-gradient(to left, #298273, #268463, #33844d, #478333, #5d8010)
   }
  
@@ -57,15 +58,18 @@ body {
     margin-bottom: 20px;
     margin-right:20px ;
 }
-  .DisplayItems{
-    position: relative;
-    margin-left: 0cm;
-    background-color: #844d26;
-    width: 100px;
-    padding: 50px;
-    transition: margin-left 0.5s;
-  }
   
+.RightSide{
+  position: absolute;
+  margin-left: 70px;
+  transition: all 0.5s;
+  width: 100%;
+}
+.DisplayItems{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
   @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
