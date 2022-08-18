@@ -34,7 +34,7 @@ export default function Register() {
     })
     if(response.status===200)
     {
-      Navigate(response.data);
+      Navigate(response.data,{replace:true});
     }
     else
     alert("Wrong Entry");

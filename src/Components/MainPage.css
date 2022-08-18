@@ -4,7 +4,7 @@ body {
   .DisplayItems{
     position: relative;
     margin-left: 0cm;
-    background-color: #844d26;
+    background-color: #cfae2bd2;
     width: 100px;
     padding: 50px;
     transition: margin-left 0.5s;
@@ -56,7 +56,8 @@ body {
     border: 2px solid black;
     margin-left: -32px;
     margin-bottom: 20px;
-    margin-right:20px ;
+    margin-right:22px ;
+    color: #298273;
 }
   
 .RightSide{

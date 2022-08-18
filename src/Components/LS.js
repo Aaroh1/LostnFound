@@ -4,11 +4,11 @@ import { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 export default function LS() {
-  const[isLOST,sets]=useState(0)
+ /*  const[isLOST,sets]=useState(0)
   useEffect(()=>{
     const queryParams = new URLSearchParams(window.location.search);
     sets(queryParams.get("LOST"));
-  })
+  }) */
   const [email,setemail]=useState('');
   const[pass,setpass]=useState('');
   let navigate=useNavigate();
@@ -24,8 +24,9 @@ export default function LS() {
      data: data,
      withCredentials:true,
    })
-   alert(response.data);
-   navigate("/sss");
+   console.log(response);
+   navigate(response.data,{replace:true});
+   
    /* if(response.status===200)
     {
       navigate(response.data);
@@ -71,7 +72,7 @@ export default function LS() {
 
                   <div className="d-flex align-items-center justify-content-center pb-4">
                     <p className="mb-0 me-2">Don't have an account?</p>
-                    <a href={(isLOST===1)?"/register?LOST=1":"/register?LOST=0"}>
+                    <a href="/register">
                     <button type="button" className="btn btn-outline-danger" >Register Here</button>
                     </a>
                   </div>
