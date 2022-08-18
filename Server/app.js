@@ -3,13 +3,15 @@ const bodyParser = require("body-parser");
 const p = require("./models/USER");
 const ITEM=require("./models/ITEM");
 const mongoose = require("mongoose");
-/* const session = require("express-session");
-const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose"); */
+const env=require("dotenv");
+const jwt=require("jsonwebtoken");
+const auth=require('./auth/tokenauth');
 const bcrypt=require("bcrypt");
 const app = express();
 const cors=require('cors');
+const secret="ChomtasaSemcret1231231233297y4u0832u74e80231";
 const multer  = require('multer');
+const USER = require("./models/USER");
 // const { default: User } = require("../Client/src/Components/User");
 mongoose.connect('mongodb://localhost:27017/LnF', {
     useNewUrlParser: true,
@@ -29,7 +31,7 @@ app.use(passport.session()); */
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './img')
+    cb(null, './public/img')
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
@@ -40,7 +42,7 @@ const storage = multer.diskStorage({
 
 const upload= multer({storage:storage});
 
-
+app.use('/public',express.static('public'))
 app.use(express.json());
 app.use(bodyParser.urlencoded(
   {
@@ -73,10 +75,21 @@ app.post("/login",async (req,res)=>{
     {
       console.log(data);
       bcrypt.compare(req.body.pass,data.password,(err,result)=>{
+        console.log("password matcheS!")
       if(err||!result)
       res.send("Error1");
       else
-      res.send("http://localhost:3000/User");
+      {
+        const token=jwt.sign({id: data._id},
+          secret,
+          {
+              expiresIn:"10h",
+          });
+          res.cookie('userToken', token) 
+          console.log("cookie sent!")
+
+          res.send("/Home?q="+data.email);
+      }
     })}
     else
     res.send("Error2");
@@ -121,6 +134,16 @@ app.get("/getAllItems",async (req,res)=>{
     res.send(items);
   else
     res.status(500).json("ERROR");
+})
+
+app.get("/UserPage",auth,async(req,res)=>{
+    const currentUser=await USER.findOne({_id:req.query.id});
+    if(currentUser)
+    {
+      res.send(currentUser);
+    }
+    else
+     res.status(500).send("ERROR");
 })
 
 app.listen(3001, () => {
