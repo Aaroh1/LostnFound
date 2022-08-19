@@ -69,6 +69,10 @@ app.post("/Upload",upload.single('item'),async(req,res)=>{
   res.send("ERROR")
 })
 
+app.get("/Home",auth,async(req,res)=>{
+  res.status(200);
+});
+
 app.post("/login",async (req,res)=>{
   const data =await p.findOne({email:req.body.email})
     if(data)
@@ -87,7 +91,6 @@ app.post("/login",async (req,res)=>{
           });
           res.cookie('userToken', token) 
           console.log("cookie sent!")
-
           res.send("/Home?q="+data.email);
       }
     })}
@@ -102,7 +105,7 @@ app.post("/register", async (req,res)=>{
   const d=await p.findOne({$or:[{email:req.body.email},{roll:req.body.roll}]})
     if(!d)
     {
-      bcrypt.hash(req.body.pass,10).then(function(hash){
+      bcrypt.hash(req.body.pass,10).then(async function(hash){
         const newUser=new p({
           email:req.body.email,
           name:req.body.name,
@@ -112,13 +115,20 @@ app.post("/register", async (req,res)=>{
           phone:req.body.phone,
           password:hash
         })
-        newUser.save((err)=>{
+        await newUser.save((err)=>{
           if(err)
           console.log(err);
           else
           console.log("Data Saved in DB");
         })
-        res.send("http://localhost:3000/User");
+        const token=jwt.sign({id: newUser._id},
+          secret,
+          {
+              expiresIn:"10h",
+          });
+          res.cookie('userToken', token) 
+          console.log("cookie sent!")
+          res.send("/Home?q="+newUser.email);
       })     
   }
       else
