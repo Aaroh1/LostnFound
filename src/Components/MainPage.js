@@ -4,9 +4,24 @@ import { useState } from 'react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { useNavigate,useLocation } from 'react-router-dom';
 export default function MainPage() {
+    const search=useLocation().search;
+    const qparams=new URLSearchParams(search);
     const [allItems,setallItems]=useState([]);
     const imgpath='http://localhost:3001/public/img/';
+    const Navigate=useNavigate();
+    useEffect(()=>{
+      axios({
+        method:"get",
+        withCredentials: true,
+        url:"http://localhost:3001/Home",
+      }).then((data)=>{
+        console.log("HERE")
+        if(data.status===200)
+        Navigate(data.data,{replace:true});
+      })
+    },[])
     useEffect(()=>{
         axios({
             method:"get",
@@ -16,7 +31,7 @@ export default function MainPage() {
                 console.log(data.data);
                 setallItems(data.data);
                 // console.log(allItems);
-              })
+              });
     },[])
     function DisplayItemCards()
     {
@@ -56,7 +71,7 @@ export default function MainPage() {
         <div>
             <div id="mySidebar" className="sidebar"  onMouseOver={openNav} onMouseLeave={closeNav} >
             <a href="#"><img className='i' src="https://img.icons8.com/ios/50/000000/home--v1.png"/>HOME</a>
-                <a href="/Upload"><img className='i'   src="https://img.icons8.com/external-those-icons-lineal-those-icons/100/000000/external-Add-notes-those-icons-lineal-those-icons.png"/>ADD ITEM</a>
+                <a href={`/Upload?q=${qparams.get('q')}`}><img className='i'   src="https://img.icons8.com/external-those-icons-lineal-those-icons/100/000000/external-Add-notes-those-icons-lineal-those-icons.png"/>ADD ITEM</a>
                 <a href="#"><img className='i' src="https://img.icons8.com/ios-glyphs/90/000000/person-male.png"/>USER PAGE</a>
             </div>
 

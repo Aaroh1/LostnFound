@@ -2,7 +2,7 @@ import React from 'react'
 import './Register.css'
 import { useState } from 'react'
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 export default function Register() {
   const Navigate=useNavigate();
