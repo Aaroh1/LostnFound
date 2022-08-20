@@ -12,22 +12,13 @@ const cors=require('cors');
 const secret="ChomtasaSemcret1231231233297y4u0832u74e80231";
 const multer  = require('multer');
 const USER = require("./models/USER");
+const { findOne } = require("./models/USER");
 // const { default: User } = require("../Client/src/Components/User");
 mongoose.connect('mongodb://localhost:27017/LnF', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connection Successful"))
     .catch((err) => console.log(err));
-
-/* app.use(session({
-    secret: "Our Little semcret!",
-    resave: false,
-    saveUninitialized: false,
-}));
-
-
-app.use(passport.initialize());
-app.use(passport.session()); */
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -55,23 +46,37 @@ app.use(cors({
 }));
 
 app.post("/Upload",upload.single('item'),async(req,res)=>{
-  const newItem=new ITEM({
-    item:req.file.filename,
-    location:req.body.location,
-    desc:req.body.desc,
-    type:req.body.type,
-    date:req.body.date
+  const obj=(f)=>{
+    return(
+    {item:req.file?.filename,
+    location:f.location,
+    desc:f.desc,
+    type:f.type,
+    date:f.date})
+  }
+  const newItem=new ITEM(obj(req.body))
+  newItem.save();
+  const user = await USER.findOne({email:req.query.email});
+  const newUploads = [...user.uploads];
+  console.log(newUploads);
+  user.set({
+    uploads: [...user.uploads, obj(req.body)]
   })
-  const I=await newItem.save();
-  if(I)
-  res.send("HELLO")
-  else
-  res.send("ERROR")
+  await user.save();
+  console.log(user);
+  res.send({});
 })
+
+
 
 app.get("/Home",auth,async(req,res)=>{
   res.status(200);
 });
+
+app.get("/Dashboard",async(req,res)=>{
+  const items=await USER.findOne({email:req.query.email});
+    res.send(items.uploads);
+})
 
 app.post("/login",async (req,res)=>{
   const data =await p.findOne({email:req.body.email})

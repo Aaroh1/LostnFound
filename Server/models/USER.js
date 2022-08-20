@@ -11,11 +11,26 @@ const schema= mongoose.Schema({
     phone:{type:String,required:true},
     uploads:[
         {
-            desc:String,
-            type:String,
-            date:Date,
-            location:String,
-            item:String,
+            desc:{
+                type:String,
+                required: false
+            },
+            type:{
+                type: String,
+                required: false,
+            },
+            date:{
+                type: String,
+                required: false
+            },
+            location:{
+                type: String, 
+                required: false
+            },
+            item:{
+                type: String,
+                required: false
+            },
         }
     ]
 });
