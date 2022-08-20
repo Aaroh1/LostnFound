@@ -2,12 +2,14 @@ body {
     font-family: "Lato", sans-serif;
   }
   .DisplayItems{
-    position: relative;
+    position: absolute;
     margin-left: 0cm;
     background-color: #cfae2bd2;
-    width: 100px;
+    width: 100%;
     padding: 50px;
     transition: margin-left 0.5s;
+    display: flex;
+    justify-content: space-around;
   }
   .sidebar {
     display:flex;
@@ -61,16 +63,12 @@ body {
 }
   
 .RightSide{
-  position: absolute;
+  position: relative;
   margin-left: 70px;
   transition: all 0.5s;
   width: 100%;
 }
-.DisplayItems{
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-}
+
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
   @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}

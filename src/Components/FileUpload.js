@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 // import './'
 export default function FileUpload() {
   
@@ -12,6 +13,11 @@ export default function FileUpload() {
     const [type,setType]=useState('');
     const [desc,setDesc]=useState('');
     
+    const search=useLocation().search;
+    const qparams=new URLSearchParams(search);
+    
+
+
     async function handleSubmit(e)
     {
         e.preventDefault();
@@ -21,13 +27,8 @@ export default function FileUpload() {
         formdata.append('date',date);
         formdata.append('type',type);
         formdata.append('desc',desc);
-     /* const response = await axios({
-     method: 'POST',
-     url: 'http://localhost:3001/Upload',
-     data: formdata,
-     withCredentials:true,
-   }) */
-   const response= await axios.post("http://localhost:3001/Upload",formdata)
+ 
+   const response= await axios.post("http://localhost:3001/Upload",formdata,{params:{email:qparams.get("q")}})
    alert(response);
     }
     return (

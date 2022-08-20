@@ -6,6 +6,7 @@ import Register from './Components/Register';
 import User from './Components/User';
 import FileUpload from './Components/FileUpload';
 import MainPage from './Components/MainPage';
+import Dashboard from './Components/Dashboard';
 function App() {
   return (
     <div className="App">
@@ -17,6 +18,7 @@ function App() {
         <Route path="/User" element={<User/>} />
         <Route path="/Upload" element={<FileUpload/>} />
         <Route path="/Home" element={<MainPage/>} />
+        <Route path="/Dashboard" element={<Dashboard/>}/>
       </Routes>
     </BrowserRouter>
     </div>

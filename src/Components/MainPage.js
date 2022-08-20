@@ -72,13 +72,13 @@ export default function MainPage() {
             <div id="mySidebar" className="sidebar"  onMouseOver={openNav} onMouseLeave={closeNav} >
             <a href="#"><img className='i' src="https://img.icons8.com/ios/50/000000/home--v1.png"/>HOME</a>
                 <a href={`/Upload?q=${qparams.get('q')}`}><img className='i'   src="https://img.icons8.com/external-those-icons-lineal-those-icons/100/000000/external-Add-notes-those-icons-lineal-those-icons.png"/>ADD ITEM</a>
-                <a href="#"><img className='i' src="https://img.icons8.com/ios-glyphs/90/000000/person-male.png"/>USER PAGE</a>
+                <a href={`/Dashboard?q=${qparams.get("q")}`}><img className='i' src="https://img.icons8.com/ios-glyphs/90/000000/person-male.png"/>USER PAGE</a>
             </div>
 
             <div className='RightSide' >
                 <div className="HorizontalNav">
                 <h2>Collapsed Sidebar</h2>
-            </div>
+                </div>
 
             <div className='DisplayItems'>{DisplayItemCards()}</div>
             
