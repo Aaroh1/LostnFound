@@ -10,6 +10,7 @@ body {
     transition: margin-left 0.5s;
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
   }
   .sidebar {
     display:flex;
@@ -67,6 +68,16 @@ body {
   margin-left: 70px;
   transition: all 0.5s;
   width: 100%;
+}
+.SearchBorder {
+  margin: 50px;
+  margin-left: 10%;
+  position: relative;
+  background: linear-gradient( #1C2367,#2752e1);
+  width: 360px;
+  height: 55px;
+  border-radius: 50px;
+  padding: 2.7px;
 }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
