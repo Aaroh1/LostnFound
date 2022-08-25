@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import {useNavigate, useLocation } from 'react-router-dom';
 // import './'
 export default function FileUpload() {
   
@@ -15,21 +15,23 @@ export default function FileUpload() {
     
     const search=useLocation().search;
     const qparams=new URLSearchParams(search);
-    
+    const Navigate=  useNavigate()
 
 
     async function handleSubmit(e)
     {
         e.preventDefault();
+        if(!item||!location||!date||!type||!desc)
+        {alert("Please Fill all subfields");return;}
         const formdata=new FormData();
         formdata.append('item',item);
         formdata.append('location',location);
         formdata.append('date',date);
         formdata.append('type',type);
         formdata.append('desc',desc);
- 
-   const response= await axios.post("http://localhost:3001/Upload",formdata,{params:{email:qparams.get("q")}})
-   alert(response);
+        const response= await axios.post("http://localhost:3001/Upload",formdata,{params:{email:qparams.get("q")}})
+        if(response.data)
+        Navigate(`/Home?q=${qparams}`, { replace: true });
     }
     return (
     <div style={{display:"flex", justifyContent:"center"}}>

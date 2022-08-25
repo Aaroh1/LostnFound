@@ -3,10 +3,10 @@ import { BrowserRouter,Routes,Route,} from "react-router-dom";
 import LandingPage from './Components/LandingPage';
 import LS from './Components/LS';
 import Register from './Components/Register';
-import User from './Components/User';
 import FileUpload from './Components/FileUpload';
 import MainPage from './Components/MainPage';
 import Dashboard from './Components/Dashboard';
+import ItemDisplay from './Components/ItemDisplay';
 function App() {
   return (
     <div className="App">
@@ -15,13 +15,29 @@ function App() {
         <Route path="/" element={<LandingPage/>}  />
         <Route path="/login" element={<LS/>} />
         <Route path="/register" element={<Register/>} />
-        <Route path="/User" element={<User/>} />
-        <Route path="/Upload" element={<FileUpload/>} />
-        <Route path="/Home" element={<MainPage/>} />
-        <Route path="/Dashboard" element={<Dashboard/>}/>
       </Routes>
+      <Routes>
+    <Route path="/Home" element={<MainPage/>} >
+      <Route index element={<ItemDisplay />} /> 
+          <Route path="Upload" element={<FileUpload/>} /> 
+          <Route path="Dashboard" element={<Dashboard />} />
+          <Route path="*" element={<NoMatch />} />
+      </Route>
+    </Routes>
     </BrowserRouter>
+  
+     
     </div>
   );
 }
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>zsdcs
+      </p>
+    </div>
+  );
+}
+
 export default App;
